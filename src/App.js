@@ -1,14 +1,103 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import guidedTours from './guidedTours.js';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import { withOktaAuth } from '@okta/okta-react';
+import Api from './Api';
+import NavBar from "./NavBar";
+import Home from "./Home";
+import AllGuides from './AllGuides';
+import EditGuide from './EditGuide';
+import Header from './Header';
+
+
+const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { authenticated: null, user: null, api: new Api() };
+    this.checkAuthentication = this.checkAuthentication.bind(this);
+  }
+
+  async checkAuthentication() {
+    const authenticated = await this.props.authState.isAuthenticated;
+    if (authenticated !== this.state.authenticated) {
+      if (authenticated) {
+        const user = await this.props.authService.getUser();
+        let accessToken = await this.props.authService.getAccessToken();
+        this.setState({ authenticated, user, api: new Api(accessToken) });
+      }
+      else {
+        this.setState({ authenticated, user:null, api: new Api() });
+      }
+    }
+  }
+
+  async componentDidMount() {
+    this.checkAuthentication();
+  }
+
+  async componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
+  async login() {
+    if (this.state.authenticated === null) return; // do nothing if auth isn't loaded yet
+    this.props.authService.login('/');
+  }
+
+  async logout() {
+    this.props.authService.logout('/');
+  }
+
+  render() {
+    let {authenticated, user, api} = this.state;
+
+    if (authenticated === null) {
+      return null;
+    }
+
+    const navbar = <NavBar
+      isAuthenticated={authenticated}
+      login={this.login.bind(this)}
+      logout={this.logout.bind(this)}
+    />;
+    const header = <Header/>;
+
+    return (
+      
+      <Switch>
+        <Route
+          path='/'
+          exact={true}
+          render={(props) => <Home {...props} authenticated={authenticated} user={user} api={api} navbar={navbar} />}
+        />
+        <SecureRoute
+          path='/guides'
+          exact={true}
+          render={(props) => <AllGuides {...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+        <SecureRoute
+          path='/guides/edit/:id'
+          render={(props) => <EditGuide {...props} authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+      </Switch>
+    )
+  }
+});
 
 class App extends Component {
+
   render() {
     return (
-      <div className="container">
-        
-      </div>
+      <Router>
+        <Security issuer='https://dev-251206.okta.com/oauth2/default'
+              clientId='0oacoppebPrx3gdYG4x6'
+              redirectUri={window.location.origin + '/callback'}
+              pkce={true}>
+          <Route path='/callback' component={LoginCallback} />
+          <AuthWrapper />
+        </Security>
+      </Router>
     )
   }
 }

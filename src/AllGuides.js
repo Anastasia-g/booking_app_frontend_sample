@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
+import Table from 'react-bootstrap/Table'
+//import Row from 'react-bootstrap/Row'
+//import Col from 'react-bootstrap/Col'
 
 class AllGuides extends Component {
   state = {
@@ -10,20 +13,20 @@ class AllGuides extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  fetchGuides() {
+  async fetchGuides() {
     console.log("fetching guides");
-    const url =
-      //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-      'http://localhost:8080/api/v1/guides'
 
-    fetch(url)
-      .then(result => result.json())
-      .then(result => {
-        console.log(result);
+    const response = await this.props.api.getAllGuides();
+    const jayson = await response.json();
+    console.log(jayson);
+    //const url = response;
+      //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
+      //'http://localhost:8080/api/v1/guides'
+
+  
         this.setState({
-          data: result,
-        })
-      })
+          data:jayson});
+      
   }
   // Code is invoked after the component is mounted/inserted into the DOM tree.
   componentDidMount() {
@@ -36,15 +39,15 @@ class AllGuides extends Component {
       method: 'DELETE'
 
 
-    }).then(() => {console.log("calling fetch"); this.fetchGuides()});
-    
+    }).then(() => { console.log("calling fetch"); this.fetchGuides() });
+
   }
   handleClickEdit(id) {
     console.log("editing " + id)
 
     this.props.history.push('guides/edit');
     //.then(() => {console.log("calling fetch"); this.fetchGuides()});
-    
+
   }
   render() {
     console.log("rendering");
@@ -57,19 +60,51 @@ class AllGuides extends Component {
       //console.log("index " + index);
       //console.log("entry id " + guide.id);
       const guideUrl = "/guides/" + guide.id;
-      return (<tr key={index} >
-        <td><Link to={guideUrl}>{guide.name}</Link>
-        </td>
-        <td>
-          <button onClick={() => { this.handleClick(guide.id) }}>Delete</button>
-          <button onClick={() => {  this.props.history.push('guides/edit/'+guide.id) }}>Edit</button>
-        </td>
-      </tr>
+      /*       return(
+              <Row>
+                <Col xs={3} key={index}><Link to={guideUrl}>{guide.name}</Link></Col>
+                <Col xs={3} >{guide.email}</Col>
+                <Col xs={2} >{guide.phone}</Col>
+      
+                 <Col xs={1}> <button onClick={() => { this.handleClick(guide.id) }}>Delete</button></Col>
+                <Col xs={1}><button onClick={() => {  this.props.history.push('guides/edit/'+guide.id) }}>Edit</button></Col>
+              </Row>
+             ) */
+             
+      return (
+
+            <tr key={index}>          
+              <td><Link to={guideUrl}>{guide.name}</Link></td>
+              <td>{guide.email}</td>
+              <td>{guide.phone}</td>
+              <td><button onClick={() => { this.handleClick(guide.id) }}>Delete</button></td>
+              <td><button onClick={() => {  this.props.history.push('guides/edit/'+guide.id) }}>Edit</button></td>
+            </tr>
+
       )
     })
 
-    return <div className="jumbotron"> <table><tbody>{result}</tbody></table></div>
+    //return <div className="jumbotron"> <table><tbody>{result}</tbody></table></div>
+    //return <Container>{result}</Container>
+    return(  
+      <div>     
+      {this.props.navbar}
+    <Table responsive striped bordered hover>
+      <thead>
+       <tr>
+         
+         <th>Name</th>
+         <th>E-mail</th>
+         <th>Phone number</th>
+         <th>#</th>
+         <th>#</th>
+       </tr>
+     </thead> 
+     <tbody>{result}</tbody>
+    </Table>
+    </div> )
+
   }
 }
 
-export default AllGuides
+export default withRouter(AllGuides)
