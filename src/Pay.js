@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {  Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
+import { withRouter, Link } from 'react-router-dom'
 
 
 class Pay extends Component {
@@ -11,31 +12,62 @@ class Pay extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
-         event.preventDefault();
-       
-        
-         console.log(event.target);
-         fetch('http://localhost:8080/api/v1/payments', {
-             method: 'POST',
-            
-             body:  JSON.stringify({"inquiryId": this.props.match.params.id, 
-             "payment":event.target.deposit.value, 
-             "paymentDate": new Date()
+    async fetchGetDepositAmountByInquiryId() {
+        const response = await this.props.api.getDepositAmountByInquiryId(this.props.match.params.inquiryId);
+        const jayson = await response.text();
+        console.log(jayson);
 
-           }),
-             headers: {
-                'Content-Type': 'application/json'
-             }
-           }).then(res => res.text()).then(txt => window.location.replace(txt)); /* window.location.replace("http://google.com")*/
-        }
+
+        this.setState({
+            data: jayson
+            //,deposit : jayson.deposit
+        });
+
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+
+
+        console.log(event.target);
+        const body = JSON.stringify({
+            "inquiryId": this.props.match.params.inquiryId,
+            "payment": event.target.deposit.value,
+            "paymentDate": new Date()
+
+        });
+        const createPaymentData = await this.props.api.createPayment(body);
+
+        
+        const paypalUrl = await createPaymentData.text();
+        console.log(paypalUrl);
+        this.setState({
+          data:paypalUrl});
+
+           window.location.replace(paypalUrl);
+    
+        // fetch('http://localhost:8080/api/v1/payments', {
+        //     method: 'POST',
+
+        //     body: JSON.stringify({
+        //         "inquiryId": this.props.match.params.inquiryId,
+        //         "payment": event.target.deposit.value,
+        //         "paymentDate": new Date()
+
+        //     }),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }).then(res => res.text()).then(txt => window.location.replace(txt)); /* window.location.replace("http://google.com")*/
+    }
     // Code is invoked after the component is mounted/inserted into the DOM tree.
     componentDidMount() {
-        const url =
-            //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-            'http://localhost:8080/api/v1/payments/' + this.props.match.params.id
+        // eslint-disable-next-line
+        // const url =
+        //     //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
+        //     'http://localhost:8080/api/v1/payments/' + this.props.match.params.inquiryId
+        this.fetchGetDepositAmountByInquiryId();
 
-        
     }
 
     render() {
@@ -44,22 +76,22 @@ class Pay extends Component {
 
         const { data } = this.state;
         if (data) {
-            console.log('pay data = ' + JSON.stringify(data));
+            console.log('pay data = ' + data);
             return (//<p> {data.name}</p>
 
-        <Form onSubmit={this.handleSubmit}> 
-        
-        <h3>Hello, please pay this deposit to book your tour:</h3>
-        <br/>
-        <Form.Group controlId="formTourInquiry">
-        <Form.Label>Deposit, EUR:</Form.Label>
-        <Form.Control size = "sm" type ="number" name="deposit"  defaultValue={data.deposit} />
-        
-        <Button variant="primary" type="submit">Pay</Button>
-        </Form.Group>
-        </Form>  
-        
-                );
+                <Form onSubmit={this.handleSubmit}>
+
+                    <h3>Hello, please pay this deposit to book your tour:</h3>
+                    <br />
+                    <Form.Group controlId="formPay">
+                        <Form.Label>Deposit, EUR:</Form.Label>
+                        <Form.Control size="sm" type="number" name="deposit" defaultValue={data} />
+
+                        <Button variant="primary" type="submit">Pay</Button>
+                    </Form.Group>
+                </Form>
+
+            );
 
 
         }
@@ -68,4 +100,4 @@ class Pay extends Component {
     }
 }
 
-export default Pay
+export default withRouter(Pay)

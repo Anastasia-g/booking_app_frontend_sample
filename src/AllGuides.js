@@ -39,7 +39,7 @@ class AllGuides extends Component {
       method: 'DELETE'
 
 
-    }).then(() => { console.log("calling fetch"); this.fetchGuides() });
+    }).then(() => { this.fetchGuides() });
 
   }
   handleClickEdit(id) {

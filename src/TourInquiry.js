@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {  Form, Button } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
 
 class TourInquiry extends Component {
     state = {
@@ -52,7 +53,7 @@ class TourInquiry extends Component {
 
                 <Form onSubmit={this.handleSubmit}> 
         
-        <h3>Send a bill for the tourist:</h3>
+        <h3>Send a bill for the tourist  ---DOUBLE PAGE---:</h3>
         <br/>
         <Form.Group controlId="formTourInquiry">
         <Form.Label>Name:</Form.Label>
@@ -65,7 +66,7 @@ class TourInquiry extends Component {
         <Form.Label>Enter total price:</Form.Label>
         <Form.Control size = "sm" name="totalPrice" placeholder="Enter total price" />
         <Form.Label>Deposit to pay:</Form.Label>
-        <Form.Control size = "sm" name="deposit" placeholder="10 percents from total price" />
+        <Form.Control size = "sm" name="deposit" placeholder="10 percents from the total price" />
         <Form.Label>Message for tourist:</Form.Label>
         <Form.Control size = "sm" name="message"  as="textarea" rows="3" />
         <Button variant="primary" type="submit">SEND payment request</Button>
@@ -80,4 +81,4 @@ class TourInquiry extends Component {
     }
 }
 
-export default TourInquiry
+export default withRouter(TourInquiry)

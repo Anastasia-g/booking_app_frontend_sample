@@ -6,9 +6,17 @@ import Api from './Api';
 import NavBar from "./NavBar";
 import Home from "./Home";
 import AllGuides from './AllGuides';
+import AddGuide from './AddGuide';
 import EditGuide from './EditGuide';
-import Header from './Header';
-
+import AllTourInquiries from './AllTourInquiries';
+import EditTourInquiry from './EditTourInquiry';
+import AddTourInquiry from './AddTourInquiry';
+import AllPayments from './AllPayments';
+import RequestPayment from './RequestPayment';
+import AllPaymentRequests from './AllPaymentRequests';
+import Pay from './Pay';
+import Process from './Process';
+import Cancel from './Cancel';
 
 const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
 
@@ -61,7 +69,7 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
       login={this.login.bind(this)}
       logout={this.logout.bind(this)}
     />;
-    const header = <Header/>;
+    
 
     return (
       
@@ -76,10 +84,62 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
           exact={true}
           render={(props) => <AllGuides {...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
+         <Route
+          path='/guides/add'
+          exact={true}
+          render={(props) => <AddGuide {...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />       
         <SecureRoute
           path='/guides/edit/:id'
           render={(props) => <EditGuide {...props} authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
+        <SecureRoute
+          path='/tourInquiries'
+          exact={true}
+          render={(props) => <AllTourInquiries{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+        <SecureRoute
+          path='/booking'
+          exact={true}
+          render={(props) => <AddTourInquiry{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+        <SecureRoute
+          path='/tourInquiries/edit/:id'
+          exact={true}
+          render={(props) => <EditTourInquiry{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+  
+        <SecureRoute
+          path='/payments'
+          exact={true}
+          render={(props) => <AllPayments {...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
+        />
+        <SecureRoute
+          path='/paymentRequests'
+          exact={true}
+          render={(props) => <AllPaymentRequests {...props} api={api} navbar={navbar}/>}
+        />
+        <SecureRoute
+          path='/paymentRequests/:id'
+          exact={true}
+          render={(props) => <RequestPayment {...props} api={api}/>}
+        />
+        <SecureRoute
+          path='/payments/:inquiryId'
+          exact={true}
+          render={(props) => <Pay {...props} api={api}/>}
+        />
+        <SecureRoute
+          path='/process'
+          exact={true}
+          render={(props) => <Process {...props} />}
+        />
+        <SecureRoute
+          path='/cancel'
+          exact={true}
+          render={(props) => <Cancel {...props} />}
+        />
+
       </Switch>
     )
   }

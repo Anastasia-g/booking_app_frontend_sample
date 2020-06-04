@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Table from 'react-bootstrap/Table'
+import { withRouter, Link } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
+
 //import {Container, Row, Cow} from 'react-bootstrap';
 
 class AllTourInquiries extends Component {
@@ -12,20 +13,28 @@ class AllTourInquiries extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  fetchTourInquiries() {
+  async fetchTourInquiries() {
     console.log("fetching tour inquiries");
-    const url =
-      //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-      'http://localhost:8080/api/v1/tourInquiries'
+    // const url =
+    //   //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
+    //   'http://localhost:8080/api/v1/tourInquiries'
 
-    fetch(url)
-      .then(result => result.json())
-      .then(result => {
-        console.log(result);
-        this.setState({
-          data: result,
-        })
-      })
+    // fetch(url)
+    //   .then(result => result.json())
+    //   .then(result => {
+    //     console.log(result);
+    //     this.setState({
+    //       data: result,
+    //     })
+    //   })
+
+    const response = await this.props.api.getAllTourInquiries();
+    const jayson = await response.json();
+    console.log(jayson);
+
+    this.setState({
+      data: jayson
+    });
   }
   // Code is invoked after the component is mounted/inserted into the DOM tree.
   componentDidMount() {
@@ -38,15 +47,15 @@ class AllTourInquiries extends Component {
       method: 'DELETE'
 
 
-    }).then(() => {console.log("calling fetch"); this.fetchTourInquiries()});
-    
+    }).then(() => { console.log("calling fetch"); this.fetchTourInquiries() });
+
   }
   handleClickEdit(id) {
     console.log("editing " + id)
 
     this.props.history.push('tourInquiries/edit');
     //.then(() => {console.log("calling fetch"); this.fetchGuides()});
-    
+
   }
   render() {
     console.log("rendering");
@@ -59,50 +68,53 @@ class AllTourInquiries extends Component {
       //console.log("index " + index);
       //console.log("entry id " + guide.id);
       const tourInquiriyUrl = "/tourInquiries/" + tourInquiry.id;
-/*       return (<tr key={index} >
-        <td><Link to={tourInquiriyUrl}>{tourInquiry.name} {tourInquiry.surname}</Link>
-        </td>
-        <td>
-          <button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button>
-          <button onClick={() => {  this.props.history.push('tourInquiries/edit/'+tourInquiry.id) }}>Edit</button>
-        </td>
-      </tr>) */
+      /*       return (<tr key={index} >
+              <td><Link to={tourInquiriyUrl}>{tourInquiry.name} {tourInquiry.surname}</Link>
+              </td>
+              <td>
+                <button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button>
+                <button onClick={() => {  this.props.history.push('tourInquiries/edit/'+tourInquiry.id) }}>Edit</button>
+              </td>
+            </tr>) */
 
       return (
 
-        <tr key={index}>          
+        <tr key={index}>
           <td><Link to={tourInquiriyUrl}>{tourInquiry.name} {tourInquiry.surname}</Link></td>
           <td>{tourInquiry.email}</td>
-          
+
           <td><button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button></td>
-          <td><button onClick={() => {  this.props.history.push('tourInquiries/edit/'+tourInquiry.id) }}>Edit</button></td>
-          <td><button onClick={() => {  this.props.history.push('/PaymentRequest/'+tourInquiry.id) }}>Request payment</button></td>
-          
+          <td><button onClick={() => { this.props.history.push('tourInquiries/edit/' + tourInquiry.id) }}>Edit</button></td>
+          <td><button onClick={() => { this.props.history.push('/PaymentRequests/' + tourInquiry.id) }}>Request payment</button></td>
+
         </tr>
 
-  )
+      )
 
 
 
-      
+
     })
 
     //return <div className="jumbotron"> <table><tbody>{result}</tbody></table></div>
-    return(
-    <Table responsive striped bordered hover>
-    <thead>
-     <tr>
-     
-       <th>Name</th>
-       <th>E-mail</th>
-       <th>#</th>
-       <th>#</th>
-       <th>#</th>
-     </tr>
-    </thead> 
-   <tbody>{result}</tbody>
-  </Table>)
+    return (
+      <div>     
+      {this.props.navbar}
+      <Table responsive striped bordered hover>
+        <thead>
+          <tr>
+
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>#</th>
+            <th>#</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>{result}</tbody>
+      </Table>
+      </div>)
   }
 }
 
-export default AllTourInquiries
+export default withRouter(AllTourInquiries)

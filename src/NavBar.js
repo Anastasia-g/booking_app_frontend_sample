@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button,  Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from  'react-bootstrap';
+import { Button,  Nav, Navbar, NavItem } from  'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
@@ -19,22 +19,23 @@ class NavBar extends Component {
   render() {
     const {isAuthenticated, login, logout} = this.props;
 
-    return <Navbar color="light" light expand="md">
+    return <Navbar color="light"  expand="md">
       <Navbar.Brand tag={Link} to="/">Home</Navbar.Brand>
       <Navbar.Brand href="/guides">All guides</Navbar.Brand>
       <Navbar.Brand href="/tourInquiries">Tour inquiries</Navbar.Brand>
+      <Navbar.Brand href="/paymentRequests">Payment requests</Navbar.Brand>
       <Navbar.Brand href="/payments">Payments</Navbar.Brand>
       <Navbar.Toggle onClick={this.toggle}/>
-      <Navbar.Collapse isOpen={this.state.isOpen} navbar>
-        <Nav className="ml-auto" navbar>
+      <Navbar.Collapse >
+        <Nav className="ml-auto">
         
          
           { !isAuthenticated ?
             <NavItem>
-              <Button color="secondary" outline onClick={login}>Login</Button>
+              <Button color="secondary"  onClick={login}>Login</Button>
             </NavItem> :
             <NavItem>
-              <Button color="secondary" outline onClick={logout}>Logout</Button>
+              <Button color="secondary" onClick={logout}>Logout</Button>
             </NavItem>
           }
         </Nav>
