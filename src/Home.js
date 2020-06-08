@@ -24,7 +24,7 @@ class Home extends Component {
             <div>
               <p>Please log in to manage Simienpark database.</p>
               <Button color="secondary" disabled={true}>
-                Manage Simienpark tours
+                Login to Simienpark tours
               </Button>
             </div>
           }

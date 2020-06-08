@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Button,  Nav, Navbar, NavItem } from  'react-bootstrap';
+import { Button, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {isOpen: false};
+    this.state = { isOpen: false };
     this.toggle = this.toggle.bind(this);
   }
 
@@ -17,22 +17,28 @@ class NavBar extends Component {
   }
 
   render() {
-    const {isAuthenticated, login, logout} = this.props;
+    const { isAuthenticated, login, logout } = this.props;
 
-    return <Navbar color="light"  expand="md">
+    return <Navbar color="light" expand="md">
       <Navbar.Brand tag={Link} to="/">Home</Navbar.Brand>
-      <Navbar.Brand href="/guides">All guides</Navbar.Brand>
-      <Navbar.Brand href="/tourInquiries">Tour inquiries</Navbar.Brand>
-      <Navbar.Brand href="/paymentRequests">Payment requests</Navbar.Brand>
-      <Navbar.Brand href="/payments">Payments</Navbar.Brand>
-      <Navbar.Toggle onClick={this.toggle}/>
+
+      {isAuthenticated ? <span>
+        <Navbar.Brand href="/guides">All guides</Navbar.Brand>
+        <Navbar.Brand href="/tourInquiries">Tour inquiries</Navbar.Brand> 
+        {/* <Navbar.Brand href="/paymentRequests">Payment requests</Navbar.Brand>
+          <Navbar.Brand href="/payments">Payments</Navbar.Brand> */}
+          </span>: <span/>}
+
+
+
+      <Navbar.Toggle onClick={this.toggle} />
       <Navbar.Collapse >
         <Nav className="ml-auto">
-        
-         
-          { !isAuthenticated ?
+
+
+          {!isAuthenticated ?
             <NavItem>
-              <Button color="secondary"  onClick={login}>Login</Button>
+              <Button color="secondary" onClick={login}>Login</Button>
             </NavItem> :
             <NavItem>
               <Button color="secondary" onClick={logout}>Logout</Button>

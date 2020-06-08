@@ -59,7 +59,8 @@ class AllTourInquiries extends Component {
   }
   render() {
     console.log("rendering");
-    const { data } = this.state
+    const { data } = this.state;
+    //const { isAuthenticated, login, logout } = this.props;
     //console.log(data);
 
 
@@ -100,6 +101,7 @@ class AllTourInquiries extends Component {
     return (
       <div>     
       {this.props.navbar}
+      
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -112,7 +114,8 @@ class AllTourInquiries extends Component {
           </tr>
         </thead>
         <tbody>{result}</tbody>
-      </Table>
+      </Table> 
+      
       </div>)
   }
 }

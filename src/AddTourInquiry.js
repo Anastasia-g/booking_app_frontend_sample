@@ -14,8 +14,9 @@ class AddTourInquiry extends Component {
     event.preventDefault();
 
     console.log(event.target);
+    this.refs.btn.setAttribute("disabled", "disabled");
    
-    fetch('http://localhost:8080/api/v1/tourInquiries/', {
+    fetch('http://localhost:8080/api/v1/bookings', {
       method: 'POST',
       body:  JSON.stringify({"name": event.target.name.value,"surname": event.target.surname.value, "email":event.target.email.value, 
       "days": event.target.days.value, "persons": event.target.persons.value,
@@ -23,7 +24,7 @@ class AddTourInquiry extends Component {
       headers: {
           'Content-Type': 'application/json'
       }
-    }).then(() => this.props.history.push('/Inquiries'));
+    }).then(() => this.props.history.push('/success'));
   }
 
 
@@ -99,7 +100,7 @@ class AddTourInquiry extends Component {
     <Form.Control size = "sm" name="message"  as="textarea" rows="3" />
   </Form.Group>
   
-  <Button variant="primary" type="submit">
+  <Button ref="btn" variant="primary" type="submit">
     SEND
   </Button>
 </Form>

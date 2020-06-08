@@ -90,7 +90,7 @@ class Api {
       }
     
       async createTourInquiry(item) {
-        return await fetch(`${this.BASE_URL+  "/tourInquiries"}`, {
+        return await fetch(`${this.BASE_URL+  "/bookings"}`, {
           method:'POST',
           headers: this.createHeaders(),
           body: item,
@@ -98,6 +98,12 @@ class Api {
       }
 
       //PAYMENT REQUEST
+      async getAllPaymentRequests() {
+        return await fetch(this.BASE_URL + "/paymentRequests", {
+          method: 'GET',
+          headers: this.createHeaders()
+        });
+      }
 
       async createPaymentRequest(item) {
         return await fetch(`${this.BASE_URL+  "/paymentRequests"}`, {
@@ -119,27 +125,13 @@ class Api {
     //PAYMENT PROCESS - PAYPAL
       
     async createPayment(item) {
-      return await fetch(`${this.BASE_URL+  "/payments"}`, {
+      return await fetch(`${this.BASE_URL+  "/makepayment"}`, {
         method:'POST',
         headers: this.createHeaders(),
         body: item,
       });
     }
-    //  async createPayment(item, tourInquiryId) {
-    //     return await fetch(`${this.BASE_URL+  "/payments"}/${tourInquiryId}`, {
-    //       method:'POST',
-    //       headers: this.createHeaders(),
-    //       body: item,
-    //     }); 
-    //   }
-
-    //   async updatePayment(item, tourInquiryId) {
-    //   return await fetch(`${this.BASE_URL+  "/payments"}/${tourInquiryId}`, {
-    //     method:'PUT',
-    //     headers: this.createHeaders(),
-    //     body: item,
-    //   });
-    // }
+    
 
 
   }

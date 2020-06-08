@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Alert from 'react-bootstrap/Alert';
 
 
 class Process extends Component {
 
     render() {
         return(
-        <h5>Thank you for your payment. All the guide's contacts will be send to your mail within 24 hours. 
-            <br/>See you soon in Ethiopia!</h5>)
+            <Alert variant="success"><Alert.Heading>Thank you for your payment.</Alert.Heading>
+            <p className="mb-0">
+            All the guide's contacts will be send to your mail within 24 hours. 
+            See you soon in Ethiopia!</p></Alert>)
         
          
     }
