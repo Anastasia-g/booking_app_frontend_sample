@@ -18,7 +18,7 @@ state = {
     console.log("fetching payment requests");
     // const url =
     //   //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-    //   'http://localhost:8080/api/v1/tourInquiries'
+    //   'http://localhost:8080/api/v1/tour-inquiries'
 
     // fetch(url)
     //   .then(result => result.json())
@@ -74,7 +74,7 @@ state = {
               </td>
               <td>
                 <button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button>
-                <button onClick={() => {  this.props.history.push('tourInquiries/edit/'+tourInquiry.id) }}>Edit</button>
+                <button onClick={() => {  this.props.history.push('tour-inquiries/edit/'+tourInquiry.id) }}>Edit</button>
               </td>
             </tr>) */
 

@@ -32,7 +32,7 @@ class EditTourInquiry extends Component {
     componentDidMount() {
         const url =
             //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-            'http://localhost:8080/api/v1/tourInquiries/' + this.props.match.params.id
+            'http://localhost:8080/api/v1/tour-inquiries/' + this.props.match.params.id
 
         fetch(url)
             .then(result => result.json())

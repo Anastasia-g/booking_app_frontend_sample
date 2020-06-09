@@ -54,7 +54,7 @@ class RequestPayment extends Component {
     componentDidMount() {
         this.fetchGetTourInquiryById();
         // console.log("payment");
-        // const url ='http://localhost:8080/api/v1/tourInquiries/' + this.props.match.params.id
+        // const url ='http://localhost:8080/api/v1/tour-inquiries/' + this.props.match.params.id
 
         // fetch(url)
         //     .then(result => result.json())

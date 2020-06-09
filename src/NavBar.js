@@ -24,7 +24,7 @@ class NavBar extends Component {
 
       {isAuthenticated ? <span>
         <Navbar.Brand href="/guides">All guides</Navbar.Brand>
-        <Navbar.Brand href="/tourInquiries">Tour inquiries</Navbar.Brand> 
+        <Navbar.Brand href="/tour-inquiries">Tour inquiries</Navbar.Brand> 
         {/* <Navbar.Brand href="/paymentRequests">Payment requests</Navbar.Brand>
           <Navbar.Brand href="/payments">Payments</Navbar.Brand> */}
           </span>: <span/>}

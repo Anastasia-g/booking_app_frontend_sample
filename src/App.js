@@ -95,7 +95,7 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
           render={(props) => <EditGuide {...props} authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
         <SecureRoute
-          path='/tourInquiries'
+          path='/tour-inquiries'
           exact={true}
           render={(props) => <AllTourInquiries{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
@@ -110,7 +110,7 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
           render={(props) => <Success{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
         <SecureRoute
-          path='/tourInquiries/edit/:id'
+          path='/tour-inquiries/edit/:id'
           exact={true}
           render={(props) => <EditTourInquiry{...props}  authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         />
@@ -126,7 +126,7 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
           render={(props) => <AllPaymentRequests {...props} authenticated={authenticated} user={user} api={api} navbar={navbar}/>}
         /> */}
         <SecureRoute
-          path='/paymentRequests/:id'
+          path='/payment-requests/:id'
           exact={true}
           render={(props) => <RequestPayment {...props} authenticated={authenticated} user={user} api={api}/>}
         />

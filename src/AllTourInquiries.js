@@ -17,7 +17,7 @@ class AllTourInquiries extends Component {
     console.log("fetching tour inquiries");
     // const url =
     //   //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-    //   'http://localhost:8080/api/v1/tourInquiries'
+    //   'http://localhost:8080/api/v1/tour-inquiries'
 
     // fetch(url)
     //   .then(result => result.json())
@@ -43,7 +43,7 @@ class AllTourInquiries extends Component {
   handleClick(id) {
     console.log("deleting " + id)
 
-    fetch('http://localhost:8080/api/v1/tourInquiries/' + id, {
+    fetch('http://localhost:8080/api/v1/tour-inquiries/' + id, {
       method: 'DELETE'
 
 
@@ -53,7 +53,7 @@ class AllTourInquiries extends Component {
   handleClickEdit(id) {
     console.log("editing " + id)
 
-    this.props.history.push('tourInquiries/edit');
+    this.props.history.push('tour-inquiries/edit');
     //.then(() => {console.log("calling fetch"); this.fetchGuides()});
 
   }
@@ -68,13 +68,13 @@ class AllTourInquiries extends Component {
       //console.log("entry name " + guide.name);
       //console.log("index " + index);
       //console.log("entry id " + guide.id);
-      const tourInquiriyUrl = "/tourInquiries/" + tourInquiry.id;
+      const tourInquiriyUrl = "/tour-inquiries/" + tourInquiry.id;
       /*       return (<tr key={index} >
               <td><Link to={tourInquiriyUrl}>{tourInquiry.name} {tourInquiry.surname}</Link>
               </td>
               <td>
                 <button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button>
-                <button onClick={() => {  this.props.history.push('tourInquiries/edit/'+tourInquiry.id) }}>Edit</button>
+                <button onClick={() => {  this.props.history.push('tour-inquiries/edit/'+tourInquiry.id) }}>Edit</button>
               </td>
             </tr>) */
 
@@ -85,8 +85,8 @@ class AllTourInquiries extends Component {
           <td>{tourInquiry.email}</td>
 
           <td><button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button></td>
-          <td><button onClick={() => { this.props.history.push('tourInquiries/edit/' + tourInquiry.id) }}>Edit</button></td>
-          <td><button onClick={() => { this.props.history.push('/PaymentRequests/' + tourInquiry.id) }}>Request payment</button></td>
+          <td><button onClick={() => { this.props.history.push('tour-inquiries/edit/' + tourInquiry.id) }}>Edit</button></td>
+          <td><button onClick={() => { this.props.history.push('/Payment-requests/' + tourInquiry.id) }}>Request payment</button></td>
 
         </tr>
 

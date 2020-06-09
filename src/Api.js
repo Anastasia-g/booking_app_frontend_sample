@@ -9,7 +9,8 @@ class Api {
       'Content-Type': 'application/json'
     };
   
-    BASE_URL = 'http://localhost:8080/api/v1';
+    //BASE_URL = 'http://localhost:8080/api/v1';
+    BASE_URL =  process.env.REACT_APP_PROXY;
   
     createHeaders() {
       //  console.log(this.authToken);
@@ -60,21 +61,21 @@ class Api {
     // TOUR INQUIRIES
 
     async getAllTourInquiries() {
-        return await fetch(this.BASE_URL + "/tourInquiries", {
+        return await fetch(this.BASE_URL + "/tour-inquiries", {
           method: 'GET',
           headers: this.createHeaders()
         });
       }
     
       async getTourInquiryById(id) {
-        return await fetch(`${this.BASE_URL+  "/tourInquiries"}/${id}`, {
+        return await fetch(`${this.BASE_URL+  "/tour-inquiries"}/${id}`, {
           method: 'GET',
           headers: this.createHeaders()
         });
       }
     
       async deleteTourInquiry(id) {
-        return await fetch(`${this.BASE_URL+  "/tourInquiries"}/${id}`, {
+        return await fetch(`${this.BASE_URL+  "/tour-inquiries"}/${id}`, {
           method: 'DELETE',
           headers: this.createHeaders()
         });
@@ -82,7 +83,7 @@ class Api {
     
       async updateTourInquiry(item, tourInquiryId) {
           console.log("item ID: " +  tourInquiryId);
-        return await fetch(`${this.BASE_URL+  "/tourInquiries"}/${tourInquiryId}`, {
+        return await fetch(`${this.BASE_URL+  "/tour-inquiries"}/${tourInquiryId}`, {
           method:'PUT',
           headers: this.createHeaders(),
           body: item,
@@ -99,14 +100,14 @@ class Api {
 
       //PAYMENT REQUEST
       async getAllPaymentRequests() {
-        return await fetch(this.BASE_URL + "/paymentRequests", {
+        return await fetch(this.BASE_URL + "/payment-requests", {
           method: 'GET',
           headers: this.createHeaders()
         });
       }
 
       async createPaymentRequest(item) {
-        return await fetch(`${this.BASE_URL+  "/paymentRequests"}`, {
+        return await fetch(`${this.BASE_URL+  "/payment-requests"}`, {
           method:'POST',
           headers: this.createHeaders(),
           body: item,
