@@ -77,7 +77,7 @@ class RequestPayment extends Component {
 
             var textForTheMail = "Dear " + data.name + ", \n"
                 // eslint-disable-next-line
-                + "\n Please pay the deposit using this link: " + 'http://localhost:3000/payments/' + data.id
+                + "\n Please pay the deposit using this link: " + 'https://reservation.simienpark.org/payments/' + data.id
                 + "\n _________________________________"
                 // eslint-disable-next-line
                 + "\n Tour details: \n Tourist: " + data.name + " " + data.surname + " \n" + " Tour lasts: " + data.days + " days \n" + " Tour starts: " + data.date.substr(0, 10) + " \n" + " How many persons: "
