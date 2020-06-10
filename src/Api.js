@@ -10,9 +10,12 @@ class Api {
     };
   
     //BASE_URL = 'http://localhost:8080/api/v1';
+
+    
     BASE_URL =  process.env.REACT_APP_PROXY;
   
     createHeaders() {
+      console.log(process.env);
       //  console.log(this.authToken);
       return this.authToken ? {
         ...this.headers,

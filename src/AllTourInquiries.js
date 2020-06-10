@@ -40,14 +40,28 @@ class AllTourInquiries extends Component {
   componentDidMount() {
     this.fetchTourInquiries();
   }
+
+  // async fetchDeleteTourInquiry(id){
+  //   const response = await this.props.api.deleteTourInquiry(id);
+  //   const jayson = await response.json();
+  //   console.log(jayson);
+
+  //   this.setState({
+  //     data: jayson
+  //   });
+
+  // }
   handleClick(id) {
     console.log("deleting " + id)
 
-    fetch('http://localhost:8080/api/v1/tour-inquiries/' + id, {
-      method: 'DELETE'
+     
+    this.props.api.deleteTourInquiry(id).then(() => { console.log("calling fetch"); this.fetchTourInquiries() });
+    
+    // fetch('http://localhost:8080/api/v1/tour-inquiries/' + id, {
+    //   method: 'DELETE'
 
 
-    }).then(() => { console.log("calling fetch"); this.fetchTourInquiries() });
+    // }).then(() => { console.log("calling fetch"); this.fetchTourInquiries() });
 
   }
   handleClickEdit(id) {
@@ -86,7 +100,7 @@ class AllTourInquiries extends Component {
 
           <td><button onClick={() => { this.handleClick(tourInquiry.id) }}>Delete</button></td>
           <td><button onClick={() => { this.props.history.push('tour-inquiries/edit/' + tourInquiry.id) }}>Edit</button></td>
-          <td><button onClick={() => { this.props.history.push('/Payment-requests/' + tourInquiry.id) }}>Request payment</button></td>
+          <td><button onClick={() => { this.props.history.push('/payment-requests/' + tourInquiry.id) }}>Request payment</button></td>
 
         </tr>
 

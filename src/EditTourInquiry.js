@@ -9,40 +9,47 @@ class EditTourInquiry extends Component {
     state = {
         data: [],
     }
-    handleSubmit(event) {
-        // event.preventDefault();
+    constructor() {
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+      async fetchGetTourInquiryById() {
 
-
-        // console.log(event.target);
-        // fetch('http://localhost:8080/api/v1/guides/'+ this.props.match.params.id, {
-        //     method: 'PUT',
-
-        //     body:  JSON.stringify({"name": event.target.name.value, "nickname":event.target.nickname.value, 
-        //     "password": event.target.password.value
-        //     , "english": event.target.english.value === "on" ? true : false,
-        //     "french": event.target.french.value === "on" ? true : false,
-        //     "email": event.target.email.value, "phone": event.target.phone.value
-        //   }),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        //   }).then(() => this.props.history.push('/'));
-    }
-    // Code is invoked after the component is mounted/inserted into the DOM tree.
+        const response = await this.props.api.getTourInquiryById(this.props.match.params.id);
+        const jayson = await response.json();
+        console.log(jayson);
+    
+    
+        this.setState({
+          data: jayson
+        });
+      }
+      async handleSubmit(event) {
+        event.preventDefault();
+    
+        const body = JSON.stringify({
+          "name": event.target.name.value, "surname": event.target.surname.value,
+          "email": event.target.email.value,
+    
+          "days": event.target.days.value,
+          "persons": event.target.persons.value,
+          "date": event.target.date.value,
+          "message": event.target.message.value
+        });
+        const tourInquiryId = Number(this.props.match.params.id);
+    
+        const updateTourInquiryData = await this.props.api.updateTourInquiry(body,tourInquiryId );
+        const jayson = await updateTourInquiryData.json();
+        //console.log(jayson);
+        this.setState({
+          data: jayson
+        });
+        this.props.history.push('/');
+      }
+    
     componentDidMount() {
-        const url =
-            //'https://en.wikipedia.org/w/api.php?action=opensearch&search=Russia&format=json&origin=*'
-            'http://localhost:8080/api/v1/tour-inquiries/' + this.props.match.params.id
-
-        fetch(url)
-            .then(result => result.json())
-            .then(result => {
-                this.setState({
-
-
-                    data: result,
-                })
-            })
+       
+       this.fetchGetTourInquiryById(); 
     }
 
     render() {
@@ -53,7 +60,8 @@ class EditTourInquiry extends Component {
         if (data) {
             console.log('single tour inquiry data = ' + JSON.stringify(data));
             return (//<p> {data.name}</p>
-
+                <div>
+                {this.props.navbar}
                 <Form onSubmit={this.handleSubmit}>
 
                     <h3>Edit tour inquiry:</h3>
@@ -64,7 +72,7 @@ class EditTourInquiry extends Component {
                     <Form.Label>Surname:</Form.Label>
                     <Form.Control size="sm" name="surname" defaultValue={data.surname} />
                     <Form.Label>Tourist's e-mail:</Form.Label>
-                    <Form.Control size="sm" type="email" defaultValue={data.email} />
+                    <Form.Control size="sm" type="email" name= "email" defaultValue={data.email} />
 
 
                     <Form.Label>How many days do you want to trek?</Form.Label>
@@ -79,11 +87,12 @@ class EditTourInquiry extends Component {
                     <Form.Label>Your message:</Form.Label>
                     <Form.Control size="sm" name="message" as="textarea" rows="3" defaultValue={data.message} />
                     <Button variant="primary" type="submit">Edit tour details</Button>
-                </Form>
+                </Form></div>
             );
 
 
         }
+
 
         return <p> Loading... </p>
     }

@@ -6,6 +6,7 @@ import { Button, Container } from 'react-bootstrap';
 class Home extends Component {
 
   render() {
+    const {login } = this.props;
     if (this.props.authenticated === null) {
       return <p>Loading...</p>;
     }
@@ -23,7 +24,7 @@ class Home extends Component {
             </div> :
             <div>
               <p>Please log in to manage Simienpark database.</p>
-              <Button color="secondary" disabled={true}>
+              <Button color="secondary" onClick={login}>
                 Login to Simienpark tours
               </Button>
             </div>

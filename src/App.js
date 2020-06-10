@@ -78,7 +78,7 @@ const AuthWrapper = withOktaAuth(class WrappedRoutes extends Component {
         <SecureRoute
           path='/'
           exact={true}
-          render={(props) => <Home {...props} authenticated={authenticated} user={user} api={api} navbar={navbar} />}
+          render={(props) => <Home {...props}  login={this.login.bind(this)} authenticated={authenticated} user={user} api={api} navbar={navbar} />}
         />
         <SecureRoute
           path='/guides'

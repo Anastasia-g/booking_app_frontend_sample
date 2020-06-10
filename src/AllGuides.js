@@ -34,12 +34,12 @@ class AllGuides extends Component {
   }
   handleClick(id) {
     console.log("deleting " + id)
+    this.props.api.deleteGuide(id).then(() => { console.log("calling fetch"); this.fetchGuides() });
+    // fetch('http://localhost:8080/api/v1/guides/' + id, {
+    //   method: 'DELETE'
 
-    fetch('http://localhost:8080/api/v1/guides/' + id, {
-      method: 'DELETE'
 
-
-    }).then(() => { this.fetchGuides() });
+    // }).then(() => { this.fetchGuides() });
 
   }
   handleClickEdit(id) {
