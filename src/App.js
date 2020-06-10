@@ -157,7 +157,7 @@ class App extends Component {
     return (
       <Router>
         <Security issuer='https://dev-251206.okta.com/oauth2/default'
-              clientId='0oacoppebPrx3gdYG4x6'
+              clientId={process.env.REACT_APP_OKTA}
               redirectUri={window.location.origin + '/callback'}
               pkce={true}>
           <Route path='/callback' component={LoginCallback} />
